@@ -14,14 +14,14 @@
 
 <p align="center">
 
-[![codecov](https://codecov.io/gh/ODGodinho/Stanley-TheTemplate-Typescript/branch/main/graph/badge.svg?token=HNBNLLPZ3J)](https://codecov.io/gh/ODGodinho/Stanley-TheTemplate-Typescript)
-[![Stargazers](https://img.shields.io/github/stars/ODGodinho/Stanley-TheTemplate-Typescript?color=F430A4)](https://github.com/ODGodinho/Stanley-TheTemplate-Typescript/stargazers)
+[![codecov](https://codecov.io/gh/ODGodinho/ODGEvents/branch/main/graph/badge.svg?token=HNBNLLPZ3J)](https://codecov.io/gh/ODGodinho/ODGEvents)
+[![Stargazers](https://img.shields.io/github/stars/ODGodinho/ODGEvents?color=F430A4)](https://github.com/ODGodinho/ODGEvents/stargazers)
 [![Made by ODGodinho](https://img.shields.io/badge/made%20by-ODGodinho-%2304A361)](https://www.linkedin.com/in/victor-alves-odgodinho/)
-[![Forks](https://img.shields.io/github/forks/ODGodinho/Stanley-TheTemplate-Typescript?color=CD4D34)](https://github.com/ODGodinho/Stanley-TheTemplate-Typescript/network/members)
-![Repository size](https://img.shields.io/github/repo-size/ODGodinho/Stanley-TheTemplate-Typescript)
-[![GitHub last commit](https://img.shields.io/github/last-commit/ODGodinho/Stanley-TheTemplate-Typescript)](https://github.com/ODGodinho/Stanley-TheTemplate-Typescript/commits/master)
+[![Forks](https://img.shields.io/github/forks/ODGodinho/ODGEvents?color=CD4D34)](https://github.com/ODGodinho/ODGEvents/network/members)
+![Repository size](https://img.shields.io/github/repo-size/ODGodinho/ODGEvents)
+[![GitHub last commit](https://img.shields.io/github/last-commit/ODGodinho/ODGEvents)](https://github.com/ODGodinho/ODGEvents/commits/master)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://opensource.org/licenses/MIT)
-[![StyleCI](https://github.styleci.io/repos/562306382/shield?branch=main)](https://github.styleci.io/repos/562306382?branch=main)
+[![StyleCI](https://github.styleci.io/repos/581704353/shield?branch=main)](https://github.styleci.io/repos/581704353?branch=main)
 
 </p>
 
@@ -31,7 +31,7 @@
 - [📗 Libraries](#-libraries)
 - [📁 Dependencies](#-dependencies)
 - [⏩ Get Started](#-get-started)
-  - [🔘 Use Template](#-use-template)
+  - [🔘 Use Event Interface](#-use-event-interface)
   - [🔑 Configure Github Secrets](#-configure-github-secrets)
     - [🙈 Create Github Token](#-create-github-token)
     - [🍀 Code Coverage](#-code-coverage)
@@ -46,15 +46,11 @@
 
 ## 🎇 Benefits
 
-- 🚀 Speed start new project or package using typescript
+- 🚀 Event Pattern for your project
 - 🚨 Over 800 rules for pattern, possible errors and errors in Linter
 - 🎇 Code quality guaranteed
-- 📢 AutoReview when opening a pull-request/merge
-    ![AutoReview Comment example](https://user-images.githubusercontent.com/3797062/97085944-87233a80-165b-11eb-94a8-0a47d5e24905.png)
-- 🧪 Automatic Test when opening pull-request/merge
-- 📈 Automatic Code Coverage when opening pull-request/merge
-    ![Code Coverage example](https://app.codecov.io/static/media/codecov-report.eeef5dba5ea18b5ed6a4.png)
-- 📦 Automatic Package and release generate on merge
+- 📢 Ioc Container
+- 🧪 100% Test Coverage
 
 ## 📗 Libraries
 
@@ -75,49 +71,53 @@
 
 ---
 
-### 🔘 Use Template
+### 🔘 Use Event Interface
 
-Click in use this template button and clone your template project
+Install in your project using this command
 
-![Use Template](https://raw.githubusercontent.com/ODGodinho/Stanley-TheTemplate/main/public/images/UseTemplate.png)
+```powershell
+yarn add @odg/events
+```
 
-### 🔑 Configure Github Secrets
+### 📰 Usage
 
-#### 🙈 Create Github Token
+#### 🌎 Implementation
 
-Before create new GITHUB_TOKEN in
+```typescript
+interface EventType {
+    "event1": number, // receive number
+    "userRegister": {
+        name: string,
+        age: number
+    } // receive object,
+}
 
-- <https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token>
+const eventBus = new EventEmitterBus<EventType>();
+const callback = (eventMessage: string) => {
+    console.log(eventMessage);
+};
 
-#### 🍀 Code Coverage
+eventBus.subscribe("event1", callback); // Subscribe before dispatch
+eventBus.dispatch("event1", 1); // Send 1 to event1
+eventBus.dispatch("userRegister", { name: "ODGodinho", age: 18 }); // Send object to userRegister
+```
 
-Add Code Coverage support in your project
+#### 🌎 Ioc
 
-1. Install CodeCov in your account <https://github.com/apps/codecov>
-2. Enter In <https://app.codecov.io/gh/+> and search your repository
-3. Click `setup repo`
-4. Copy CODECOV_TOKEN and create a secret called CODECOV_TOKEN
+```typescript
+class Example {
+    public constructor(
+        private eventBus: EventEmitterBus<EventType>
+    ) {
+    }
 
-#### 📦 Create NPM Token
-
-if you want to generate packages create a secret called IS_PACKAGE = true AND create new NPM_TOKEN in
-
-- <https://docs.npmjs.com/creating-and-viewing-access-tokens>
-
-#### 🔐 Create project Environment
-
-- On GitHub.com, navigate to the main page of the repository.
-- Under your repository name, click `⚙️ Settings`.
-![Github Setting images example](https://docs.github.com/assets/cb-27528/images/help/repository/repo-actions-settings.png)
-- In the "Security" section of the sidebar, select `✳️ Secrets`, then click Actions.
-- Click New repository secret.
-- Type a name with: **GH_TOKEN**
-- Enter with your access secret token `ghp_Dsfde....`
-- Click Add secret.
-- If you are going to publish package:
-  - create **IS_PACKAGE** = `true`
-  - create **NPM_TOKEN** = `npm_szxw......`
-  - create **CODECOV_TOKEN** = `00000000-0000-0000-0000-000000000000`
+    public example(){
+        // code ...
+        this.eventBus.dispatch("event1", 1);
+        // code ...
+    }
+}
+```
 
 ### 💻 Prepare To Develop
 

@@ -1,21 +1,17 @@
 {
-    "name": "stanley-the-template-typescript",
-    "version": "0.0.0",
-    "description": "Stanley TheTemplate for typescript project",
+    "name": "@odg/events",
+    "version": "0.0.1",
+    "description": "Events Interface for Ioc",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "homepage": "",
-    "repository": {
-        "type": "git",
-        "url": ""
-    },
     "scripts": {
         "build": "rimraf build && tsc --project ./tsconfig.build.json",
         "build:watch": "rimraf build && tsc --project ./tsconfig.build.json -w",
         "dev": "ts-node ./src/index.ts",
         "start": "node ./dist/index.ts",
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix",
+        "lint": "eslint \"**/*.+(js|jsx|ts|tsx|json|jsonc|json5|yml|yaml|xml|txt|svg|properties|gradle|java|cpp|c|cs|html|css|groovy|gitignore|npmignore|toml|env|example|sample|ini|php|bat|powershell|ps1|sh|bash)\"",
+        "lint:fix": "eslint \"**/*.+(js|jsx|ts|tsx|json|jsonc|json5|yml|yaml|xml|txt|svg|properties|gradle|java|cpp|c|cs|html|css|groovy|gitignore|npmignore|toml|env|example|sample|ini|php|bat|powershell|ps1|sh|bash)\" --fix",
         "test": "jest",
         "test:ci": "jest --ci --passWithNoTests",
         "test:watch": "jest --watchAll"
