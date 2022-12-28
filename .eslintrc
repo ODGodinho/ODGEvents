@@ -2,5 +2,13 @@
     "env": {
         "jest": true
     },
-    "extends": [ "@odg" ]
+    "extends": [ "@odg" ],
+    "rules": {
+        "unicorn/consistent-function-scoping": [
+            "error",
+            {
+                "checkArrowFunctions": false
+            }
+        ]
+    }
 }

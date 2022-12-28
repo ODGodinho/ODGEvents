@@ -61,6 +61,8 @@
         "typescript": "^4.8.4"
     },
     "dependencies": {
-        "@odg/tsconfig": "*"
+        "@odg/exception": "^1.1.0",
+        "@odg/tsconfig": "*",
+        "eventemitter2": "^6.4.9"
     }
 }

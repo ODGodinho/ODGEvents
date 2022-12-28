@@ -32,11 +32,13 @@
 - [📁 Dependencies](#-dependencies)
 - [⏩ Get Started](#-get-started)
   - [🔘 Use Event Interface](#-use-event-interface)
-  - [🔑 Configure Github Secrets](#-configure-github-secrets)
-    - [🙈 Create Github Token](#-create-github-token)
-    - [🍀 Code Coverage](#-code-coverage)
-    - [📦 Create NPM Token](#-create-npm-token)
-    - [🔐 Create project Environment](#-create-project-environment)
+  - [📰 Usage](#-usage)
+  - [🌎 Implementation](#-implementation)
+  - [🌎 Ioc](#-ioc)
+  - [🏓 Use Event Provider](#-use-event-provider)
+    - [🚡 Enum Events Types](#-enum-events-types)
+    - [🥮 Make a provider](#-make-a-provider)
+    - [🦻 Use Event Listeners](#-use-event-listeners)
   - [💻 Prepare to develop](#-prepare-to-develop)
   - [📍 Start Project](#-start-project)
   - [📨 Build and Run](#-build-and-run)
@@ -118,6 +120,109 @@ class Example {
     }
 }
 ```
+
+
+## 🏓 Use Event Provider
+
+### 🚡 Enum Events Types
+
+```typescript
+enum EventName {
+    Example = "Example",
+}
+```
+
+```typescript
+import { type EventObjectType } from "@odg/events";
+
+import { type EventName } from "../app/Enums";
+
+export interface EventExampleParameters {
+    // anything params
+}
+
+export interface EventBaseInterface extends EventObjectType {
+    [EventName.Example]: EventExampleParameters;
+}
+
+// IF the above interface does not have all existing laws in the enum it will report an error
+export type EventTypes<T extends Record<EventName, unknown> = EventBaseInterface> = T;
+```
+
+### 🥮 Make a provider
+
+```typescript
+import {
+    EventBusInterface,
+    EventServiceProvider as EventServiceProviderBase,
+    type EventListener,
+} from "@odg/events";
+import {
+    Container,
+    inject, injectable,
+} from "inversify";
+
+import { type EventTypes } from "../../Interfaces/EventsInterface";
+import { ContainerName, EventName } from "../Enums";
+import { type HomeEventListeners } from "../Listeners/HomeEventListeners";
+
+@injectable()
+export class EventServiceProvider extends EventServiceProviderBase<EventTypes> {
+
+    @inject(ContainerName.EventBus)
+    protected bus!: EventBusInterface<Events>;
+
+    /**
+     * Listeners for events in the application.
+     *
+     * @protected
+     * @type {EventListener<EventTypes>}
+     * @memberof EventServiceProvider
+     */
+    protected listeners: EventListener<EventTypes> = {
+        [EventName.Example]: [
+            {
+                listener: new HomeEventListeners(), // You can use inversify
+                options: {},
+            },
+        ],
+    };
+
+    public async boot(): Promise<void> {
+        await super.boot();
+    }
+
+    public async shutdown(): Promise<void> {
+        await super.shutdown();
+    }
+
+}
+```
+
+### 🦻 Use Event Listeners
+
+```typescript
+import { type EventListenerInterface } from "@odg/events";
+import { LoggerInterface } from "@odg/log";
+import { inject, injectable } from "inversify";
+
+import { type EventExampleType, type EventTypes } from "../../Interfaces/EventsInterface";
+import { ContainerName, type EventName } from "../Enums"; // If use inversify
+import { PageFactoryType } from "../Factory/PageFactory";
+
+@injectable()
+export class HomeEventListeners implements EventListenerInterface<EventTypes, EventName.Example> {
+
+    @inject(ContainerName.Logger) // You can use constructor to inject
+    public log!: LoggerInterface;
+
+    public async handler({ page }: EventExampleType): Promise<void> {
+        await this.log.debug("HomeEventListeners is sended");
+    }
+
+}
+```
+
 
 ### 💻 Prepare To Develop
 
