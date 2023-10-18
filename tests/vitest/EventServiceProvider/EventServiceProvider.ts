@@ -2,7 +2,7 @@ import {
     type EventListener,
     EventServiceProvider as EventServiceProviderBase,
     type EventBusInterface,
-} from "../../../src";
+} from "../../../src/index";
 
 import { TestEventListeners } from "./TestEventListeners";
 

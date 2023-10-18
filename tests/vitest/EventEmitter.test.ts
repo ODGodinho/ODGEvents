@@ -1,4 +1,5 @@
 import EventEmitter2 from "eventemitter2";
+import { vi } from "vitest";
 
 import { EventEmitterBus } from "../../src/index";
 
@@ -14,7 +15,7 @@ describe("Test EventEmitterBus", () => {
     test("Test Event Dispatch", async () => {
         const eventBus = new EventEmitterBus<{ test: string }>();
 
-        const mockCallback = jest.fn(async (eventMessage: string) => {
+        const mockCallback = vi.fn(async (eventMessage: string) => {
             expect(eventMessage).toBe(eventSend);
         });
 
@@ -28,7 +29,7 @@ describe("Test EventEmitterBus", () => {
     test("Test Event Disable", async () => {
         const eventBus = new EventEmitterBus<{ test: string }>();
 
-        const mockCallback = jest.fn(async (eventMessage: string) => {
+        const mockCallback = vi.fn(async (eventMessage: string) => {
             expect(eventMessage).toBe(eventSend);
         });
 
@@ -46,7 +47,7 @@ describe("Test EventEmitterBus", () => {
         const eventBus = new EventEmitterBus<{
             [symbolEventName]: string;
         }>();
-        const mockCallback = jest.fn(async (eventMessage: string) => {
+        const mockCallback = vi.fn(async (eventMessage: string) => {
             expect(eventMessage).toBe(eventSend);
         });
 
@@ -61,7 +62,7 @@ describe("Test EventEmitterBus", () => {
     test("Test Multiple Subscribe", async () => {
         const eventBus = new EventEmitterBus<{ test: string }>();
 
-        const mockCallback = jest.fn(async (eventMessage: string) => {
+        const mockCallback = vi.fn(async (eventMessage: string) => {
             expect(eventMessage).toBe(eventSend);
         });
 
@@ -77,7 +78,7 @@ describe("Test EventEmitterBus", () => {
     test("Test Once Event", async () => {
         const eventBus = new EventEmitterBus<{ test: string }>();
 
-        const mockCallback = jest.fn(async (eventMessage: string) => {
+        const mockCallback = vi.fn(async (eventMessage: string) => {
             expect(eventMessage).toBe(eventSend);
         });
 
