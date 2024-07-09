@@ -52,7 +52,7 @@
         "@odg/eslint-config": "*",
         "@odg/tsconfig": "*",
         "@types/node": ">=18",
-        "@vitest/coverage-v8": "^0.34.6",
+        "@vitest/coverage-v8": "^2.0.0",
         "eslint": "*",
         "rimraf": "^5.0.5",
         "typescript": "^5.2.2",
