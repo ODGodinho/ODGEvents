@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { type EventOptions } from "..";
-import { type EventObjectType, type EventBusInterface } from "../interfaces";
-import { type EventListenerInterface } from "../interfaces/EventListenerInterface";
+import { type EventObjectType, type EventBusInterface, type EventListenerInterface } from "../interfaces";
 
 export interface EventListenerOptions<
     Events extends EventObjectType,
@@ -13,7 +13,12 @@ export interface EventListenerOptions<
 export type EventListener<
     Events extends EventObjectType,
     EventName extends keyof Events = keyof Events,
-> = Record<EventName, Array<EventListenerOptions<Events, EventName>> | never[]>;
+> = Record<EventName, Array<EventListenerOptions<Events, EventName>>>;
+
+export type EventListenerNotation<
+    Events extends EventObjectType,
+    EventName extends keyof Events = keyof Events,
+> = Record<EventName, Array<Partial<EventListenerOptions<Events, EventName>> & { containerName: string }>>;
 
 export abstract class EventServiceProvider<Events extends EventObjectType> {
 

@@ -12,8 +12,8 @@ export interface EventListenerInterface<Events extends EventObjectType, EventNam
     /**
      * Handler event callback
      *
-     * @param {Events[EventName]} argument Received Argument
      * @memberof EventListenerInterface
+     * @param {Events[EventName]} argument Received Argument
      */
     handler(argument: Events[EventName]): Promise<void> | void;
 

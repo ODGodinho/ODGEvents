@@ -1,4 +1,4 @@
-import { EventEmitterBus } from "../../../dist";
+import { EventEmitterBus } from "../../../src";
 
 import { EventServiceProvider } from "./EventServiceProvider";
 

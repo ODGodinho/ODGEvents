@@ -1,2 +1,3 @@
-export * from "./EventBusInterface";
-export * from "./EventListenerInterface";
+export type * from "./EventBusInterface";
+
+export type * from "./EventListenerInterface";

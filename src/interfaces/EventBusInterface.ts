@@ -42,9 +42,9 @@ export interface EventBusInterface<Events extends EventObjectType> {
      * Subscribe to an event
      *
      * @template {EventNameType} Key
+     * @memberof EventBusInterface
      * @param {Key} event
      * @param {HandlerEventCallback<Events[Key]>} listener
-     * @memberof EventBusInterface
      */
     subscribe<Key extends keyof Events>(
         event: Key,
@@ -56,9 +56,9 @@ export interface EventBusInterface<Events extends EventObjectType> {
      * Unsubscribe function to an event
      *
      * @template {EventNameType} Key
+     * @memberof EventBusInterface
      * @param {Key} event
      * @param {HandlerEventCallback<Events[Key]>} listener
-     * @memberof EventBusInterface
      */
     unsubscribe<Key extends keyof Events>(
         event: Key,
@@ -69,9 +69,9 @@ export interface EventBusInterface<Events extends EventObjectType> {
      * Dispatch an event
      *
      * @template {EventNameType} Key
+     * @memberof EventBusInterface
      * @param {Key} event
      * @param {Events[Key]} handler
-     * @memberof EventBusInterface
      */
     dispatch<Key extends keyof Events>(
         event: Key,

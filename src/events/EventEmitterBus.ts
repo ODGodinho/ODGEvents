@@ -6,7 +6,7 @@ import {
     type EventNameType,
     type HandlerEventCallback,
     type EventObjectType,
-} from "../interfaces/EventBusInterface";
+} from "../interfaces";
 
 export class EventEmitterBus<Events extends EventObjectType> implements EventBusInterface<Events> {
 
@@ -42,11 +42,9 @@ export class EventEmitterBus<Events extends EventObjectType> implements EventBus
     /**
      * Convert event name to valid event name
      *
-     * @private
      * @template {string} Key
      * @param {Key} event Event
      * @returns {EventNameType}
-     * @memberof EventEmitterBus
      */
     private getEventName<Key extends keyof Events>(event: Key): EventNameType {
         return typeof event === "symbol" ? event : String(event);

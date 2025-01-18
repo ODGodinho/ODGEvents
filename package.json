@@ -4,20 +4,27 @@
     "description": "Events Interface for Ioc",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
-    "homepage": "",
+    "homepage": "https://github.com/ODGodinho/ODGEvents",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ODGodinho/ODGEvents"
+    },
     "scripts": {
-        "build": "rimraf dist && tsc --project ./tsconfig.build.json",
-        "build:watch": "rimraf dist && tsc --project ./tsconfig.build.json -w",
-        "dev": "ts-node ./src/index.ts",
-        "start": "node ./dist/index.ts",
-        "lint": "eslint \"**/*.+(js|jsx|ts|tsx|json|jsonc|json5|yml|yaml|xml|txt|svg|properties|gradle|java|cpp|c|cs|html|css|groovy|gitignore|npmignore|toml|env|example|sample|ini|php|bat|powershell|ps1|sh|bash)\"",
-        "lint:fix": "eslint \"**/*.+(js|jsx|ts|tsx|json|jsonc|json5|yml|yaml|xml|txt|svg|properties|gradle|java|cpp|c|cs|html|css|groovy|gitignore|npmignore|toml|env|example|sample|ini|php|bat|powershell|ps1|sh|bash)\" --fix",
+        "build": "rimraf dist/ && tsc --project ./tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+        "build:watch": "npm run build && (concurrently \"tsc --project ./tsconfig.build.json -w\" \"tsc-alias -p tsconfig.build.json -w\")",
+        "start": "node ./dist/index.js",
+        "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.jsonc,.json5,.yml,.yaml,.xml,.txt,.svg,.properties,.gradle,.java,.cpp,.c,.cs,.html,.css,.groovy,.gitignore,.npmignore,.toml,.env,.example,.sample,.ini,.php,.bat,.powershell,.ps1,.sh,.bash,.eslintrc",
+        "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.json,.jsonc,.json5,.yml,.yaml,.xml,.txt,.svg,.properties,.gradle,.java,.cpp,.c,.cs,.html,.css,.groovy,.gitignore,.npmignore,.toml,.env,.example,.sample,.ini,.php,.bat,.powershell,.ps1,.sh,.bash,.eslintrc --fix",
+        "prepare": "husky",
         "test": "vitest run",
         "test:ci": "vitest run --passWithNoTests",
         "test:watch": "vitest --watch"
     },
     "publishConfig": {
         "access": "public"
+    },
+    "lint-staged": {
+        "*": [ "npm run lint:fix" ]
     },
     "release": {
         "branches": [
@@ -52,15 +59,21 @@
         "@odg/eslint-config": "*",
         "@odg/tsconfig": "*",
         "@types/node": ">=18",
-        "@vitest/coverage-v8": "^0.34.6",
-        "eslint": "*",
-        "rimraf": "^5.0.5",
-        "typescript": "^5.2.2",
+        "@vitest/coverage-istanbul": "^1",
+        "concurrently": "^9.1.2",
+        "husky": "^9.1.7",
+        "lint-staged": "^15.4.1",
+        "rimraf": "*",
+        "tsc-alias": "^1.8.10",
+        "typescript": "^5.7.3",
         "vite-tsconfig-paths": "^4.2.1",
-        "vitest": "^0.34.6"
+        "vitest": "^1"
     },
     "dependencies": {
         "@odg/exception": "*",
         "eventemitter2": "^6.4.9"
+    },
+    "optionalDependencies": {
+        "reflect-metadata": "^0.2.2"
     }
 }
